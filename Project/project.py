@@ -21,52 +21,55 @@ def get_data():
 if __name__ == '__main__':
     #data = get_data()
     df = pd.read_csv('/Users/robertoguarneros/Documents/Uni/Cursos/dataVisualization/Project/Accidents_de_tr_nsit_amb_morts_o_ferits_greus_a_Catalunya.csv')
-    #print(df.head())
+    # unique_values = df['F_UNITATS_IMPLICADES'].unique()
+    # print(df['F_UNITATS_IMPLICADES'].dtype)
+    # #print(df.head())
 
-    # Ejericicio 2: Proporción de accidentes por tipo de implicado
-    #df = df_grouped = df.groupby('F_UNITATS_IMPLICADES').size().reset_index(name='counts')
-    # Juntar mas de 2 implicados en un grupo
-    #df.loc[df['F_UNITATS_IMPLICADES'] > 2, 'F_UNITATS_IMPLICADES'] = 'múltiples'
+    # #Ejericicio 2: Proporción de accidentes por tipo de implicado
+    # df = df_grouped = df.groupby('F_UNITATS_IMPLICADES').size().reset_index(name='counts')
+    # #Juntar mas de 2 implicados en un grupo
+    # df.loc[df['F_UNITATS_IMPLICADES'] > 2, 'F_UNITATS_IMPLICADES'] = 'múltiples'
 
     # fig = px.pie(df, values='counts',names='F_UNITATS_IMPLICADES', title='Proporción de Accidentes por tipo de implicado')
     # fig.show()
 
-    # Ejercicio 3: Número total de accidentes por tipo de colisión
-    # Crear una nueva columna para las combinaciones de tipos de vehículos implicados con solo 2 implicados
-    # Separar solo cuando hay 2 implicados
-    df = df[df['F_UNITATS_IMPLICADES'] == 2]
-    df = df.rename(columns={
-        'F_CICLOMOTORS_IMPLICADES': 'Ciclomotor',
-        'F_BICICLETES_IMPLICADES': 'Bicicleta',
-        'F_MOTOCICLETES_IMPLICADES': 'Motocicleta',
-        'F_VEH_LLEUGERS_IMPLICADES': 'Vehículo ligero',
-        'F_VEH_PESANTS_IMPLICADES': 'Vehículo pesado'
-    })
-    vehicle_columns = [
-        'Ciclomotor', 'Bicicleta', 'Motocicleta',
-        'Vehículo ligero', 'Vehículo pesado'
-    ]
+    # # Ejercicio 3: Número total de accidentes por tipo de colisión
+    # # Crear una nueva columna para las combinaciones de tipos de vehículos implicados con solo 2 implicados
+    # # Separar solo cuando hay 2 implicados
+    # df = df[df['F_UNITATS_IMPLICADES'] == 2]
+    # df = df.rename(columns={
+    #     'F_CICLOMOTORS_IMPLICADES': 'Ciclomotor',
+    #     'F_BICICLETES_IMPLICADES': 'Bicicleta',
+    #     'F_MOTOCICLETES_IMPLICADES': 'Motocicleta',
+    #     'F_VEH_LLEUGERS_IMPLICADES': 'Vehículo ligero',
+    #     'F_VEH_PESANTS_IMPLICADES': 'Vehículo pesado'
+    # })
+    # vehicle_columns = [
+    #     'Ciclomotor', 'Bicicleta', 'Motocicleta',
+    #     'Vehículo ligero', 'Vehículo pesado'
+    # ]
 
-    def get_vehicle_combinations(row):
-        vehicles = []
-        for col in vehicle_columns:
-            if row[col] > 0:
-                vehicles.append(col)
-        return ', '.join(vehicles)
+    # def get_vehicle_combinations(row):
+    #     vehicles = []
+    #     for col in vehicle_columns:
+    #         if row[col] > 0:
+    #             vehicles.append(col)
+    #     return ', '.join(vehicles)
 
-    df['Vehicle_Combination'] = df.apply(get_vehicle_combinations, axis=1)
+    # df['Vehicle_Combination'] = df.apply(get_vehicle_combinations, axis=1)
 
-    # Filtrar combinaciones no vacías
-    df = df[df['Vehicle_Combination'] != '']
+    # # Filtrar combinaciones no vacías
+    # df = df[df['Vehicle_Combination'] != '']
 
-    # Agrupar por combinaciones de vehículos y contar el número de accidentes
-    df_grouped = df.groupby('Vehicle_Combination').size().reset_index(name='Numero de accidentes')
-    print(df_grouped.head())
+    # # Agrupar por combinaciones de vehículos y contar el número de accidentes
+    # df_grouped = df.groupby('Vehicle_Combination').size().reset_index(name='Numero de accidentes')
+    # df_grouped = df_grouped.sort_values('Numero de accidentes', ascending=False)
+    # print(df_grouped.head())
 
-    # Visualizar los resultados
-    fig = px.bar(df_grouped, x='Vehicle_Combination', y='Numero de accidentes', title='Número de accidentes por combinación de vehículos')
-    fig.update_traces(texttemplate='%{y}', textposition='outside')
-    fig.show()
+    # # Visualizar los resultados
+    # fig = px.bar(df_grouped, x='Vehicle_Combination', y='Numero de accidentes', title='Número de accidentes por combinación de vehículos')
+    # fig.update_traces(texttemplate='%{y}', textposition='outside')
+    # fig.show()
 
 
     # # Ejercicio 7: Número total de accidentes por año
